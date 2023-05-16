@@ -1,0 +1,23 @@
+root = true
+
+[*]
+indent_style = space
+indent_size = 2
+end_of_line = lf
+trim_trailing_whitespace = true
+insert_final_newline = true
+charset = utf-8
+
+[*.md]
+trim_trailing_whitespace = false
+
+# настройки для JavaScript
+[*.js]
+# длина строки не должна превышать 80 символов
+max_line_length = 80
+
+# настройки для CSS
+[*.css]
+# отступы устанавливаются 2 пробелами
+indent_style = space
+indent_size = 2
