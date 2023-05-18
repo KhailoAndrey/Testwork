@@ -7,7 +7,7 @@ export const WrapperHomePage = styled.div`
   right: 20vw;
   width: 400px; */
   display: flex;
-margin-top: 20vh;
+/* margin-top: 10vh; */
 width: 35vw; 
 align-items: center;
 justify-content: center;

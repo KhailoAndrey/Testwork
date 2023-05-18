@@ -32,7 +32,21 @@ const UserCard = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [hasMore, setHasMore] = useState(true);
   const [followingStatus, setFollowingStatus] = useState({});
+//   const [selectedOption, setSelectedOption] = useState('all');
+//   const [filteredUsers, setFilteredUsers] = useState([]);
 
+//   const handleOptionChange = event => {
+//     setSelectedOption(event.target.value);
+
+//     let filteredUsers = users;
+//     if (event.target.value === 'follow') {
+//       filteredUsers = filteredUsers.filter(user => !followingStatus[user.id]);
+//     } else if (event.target.value === 'followings') {
+//       filteredUsers = filteredUsers.filter(user => followingStatus[user.id]);
+//     }
+//     setFilteredUsers(filteredUsers);
+//   };
+  
   const loadMoreCards = () => {
     setCurrentIndex(prevIndex => prevIndex + 3);
   };
@@ -51,7 +65,7 @@ const UserCard = () => {
   useEffect(() => {
     const endIndex = currentIndex + 3;
     setDisplayedUsers(users.slice(currentIndex, endIndex));
-    setHasMore(endIndex < users.length);
+      setHasMore(endIndex < users.length);
   }, [currentIndex, users]);
 
   useEffect(() => {
@@ -67,46 +81,92 @@ const UserCard = () => {
     setFollowingStatus(storedStatus);
   }, [users]);
 
-  const handleClick = useCallback(
-    async (event, userId, following) => {
-      const updatedUsers = users.map(user => {
-        if (user.id === userId) {
-          const updatedFollowers = following
-            ? user.followers - 1
-            : user.followers + 1;
-          updateUsers(user.id, updatedFollowers)
-            .then(response => {
-              setUsers(prevUsers => {
-                return prevUsers.map(prevUser => {
-                  if (prevUser.id === userId) {
-                    return {
-                      ...prevUser,
-                      following: !prevUser.following,
-                      followers: updatedFollowers,
-                    };
-                  }
-                  return prevUser;
+//   const handleClick = useCallback(
+//     async (event, userId, following) => {
+//       const updatedUsers = users.map(user => {
+//         if (user.id === userId) {
+//           const updatedFollowers = following
+//             ? user.followers - 1
+//             : user.followers + 1;
+
+//           setUsers(prevUsers => {
+//             return prevUsers.map(prevUser => {
+//               if (prevUser.id === userId) {
+//                 return {
+//                   ...prevUser,
+//                   following: !prevUser.following,
+//                   followers: updatedFollowers,
+//                 };
+//               }
+//               return prevUser;
+//             });
+//           });
+
+//           setFollowingStatus(prevStatus => ({
+//             ...prevStatus,
+//             [userId]: !prevStatus[userId],
+//           }));
+
+//           localStorage.setItem(
+//             `followingStatus_${userId}`,
+//             (!following).toString()
+//           );
+
+//           updateUsers(userId, updatedFollowers)
+//             .then(response => {
+//               console.log('User updated successfully:', response);
+//             })
+//             .catch(error => {
+//               console.error('Error updating user:', error);
+//             });
+//         }
+//         return user;
+//       });
+//       setUsers(updatedUsers);
+//     },
+//     [users]
+//   );
+
+    const handleClick = useCallback(
+      async (event, userId, following) => {
+        const updatedUsers = users.map(user => {
+          if (user.id === userId) {
+            const updatedFollowers = following
+              ? user.followers - 1
+              : user.followers + 1;
+            updateUsers(user.id, updatedFollowers)
+              .then(response => {
+                setUsers(prevUsers => {
+                  return prevUsers.map(prevUser => {
+                    if (prevUser.id === userId) {
+                      return {
+                        ...prevUser,
+                        following: !prevUser.following,
+                        followers: updatedFollowers,
+                      };
+                    }
+                    return prevUser;
+                  });
                 });
+                setFollowingStatus(prevStatus => ({
+                  ...prevStatus,
+                  [userId]: !prevStatus[userId],
+                }));
+                localStorage.setItem(
+                  `followingStatus_${userId}`,
+                  (!following).toString()
+                );
+              })
+              .catch(error => {
+                console.error('Error updating user:', error);
               });
-              setFollowingStatus(prevStatus => ({
-                ...prevStatus,
-                [userId]: !prevStatus[userId],
-              }));
-              localStorage.setItem(
-                `followingStatus_${userId}`,
-                (!following).toString()
-              );
-            })
-            .catch(error => {
-              console.error('Error updating user:', error);
-            });
-        }
-        return user;
-      });
-      setUsers(updatedUsers);
-    },
-    [users]
-  );
+          }
+          return user;
+        });
+        setUsers(updatedUsers);
+      },
+      [users]
+    );
 
   return (
     <>
@@ -114,6 +174,13 @@ const UserCard = () => {
         <Header>
           <StyledLink to="/">Go Home</StyledLink>
         </Header>
+        {/* <div>
+          <select value={selectedOption} onChange={handleOptionChange}>
+            <option value="all">Show All</option>
+            <option value="follow">Follow</option>
+            <option value="followings">Followings</option>
+          </select>
+        </div> */}
         <UserCardContainer>
           {displayedUsers.map(user => (
             <UserBox key={user.id}>
