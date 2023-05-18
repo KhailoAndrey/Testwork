@@ -1,5 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { useDispatch } from 'react-redux';
+import logo from '../../images/Logo.png';
+import pic from '../../images/picture.png';
 
 import {
   AvatarBox,
@@ -23,17 +25,13 @@ import {
 import { fetchgetUsers } from 'components/Redux/option';
 import { updateUsers } from 'components/Fetch/updateUsers';
 
-
 const UserCard = () => {
-  const logo = '../../images/Logo.png';
-  const pic = '../../images/picture.png';
   const dispatch = useDispatch();
   const [users, setUsers] = useState([]);
   const [displayedUsers, setDisplayedUsers] = useState([]);
   const [currentIndex, setCurrentIndex] = useState(0);
-    const [hasMore, setHasMore] = useState(true);
-    const [followingStatus, setFollowingStatus] = useState({});
-
+  const [hasMore, setHasMore] = useState(true);
+  const [followingStatus, setFollowingStatus] = useState({});
 
   const loadMoreCards = () => {
     setCurrentIndex(prevIndex => prevIndex + 3);
@@ -55,62 +53,60 @@ const UserCard = () => {
     setDisplayedUsers(users.slice(currentIndex, endIndex));
     setHasMore(endIndex < users.length);
   }, [currentIndex, users]);
-    
-    useEffect(() => {
-      const storedStatus = {};
-      users.forEach(user => {
-        const storedFollowingStatus = localStorage.getItem(
-          `followingStatus_${user.id}`
-        );
-        if (storedFollowingStatus !== null) {
-          storedStatus[user.id] = storedFollowingStatus === 'true';
-        }
-      });
-      setFollowingStatus(storedStatus);
-    }, [users]);
 
-    const handleClick = useCallback(
-      async (event, userId, following) => {
-        const updatedUsers = users.map(user => {
-          if (user.id === userId) {
-            const updatedFollowers = following
-              ? user.followers - 1
-              : user.followers + 1;
-            updateUsers(user.id, updatedFollowers)
-              .then(response => {
-                setUsers(prevUsers => {
-                  return prevUsers.map(prevUser => {
-                    if (prevUser.id === userId) {
-                      return {
-                        ...prevUser,
-                        following: !prevUser.following,
-                        followers: updatedFollowers,
-                      };
-                    }
-                    return prevUser;
-                  });
+  useEffect(() => {
+    const storedStatus = {};
+    users.forEach(user => {
+      const storedFollowingStatus = localStorage.getItem(
+        `followingStatus_${user.id}`
+      );
+      if (storedFollowingStatus !== null) {
+        storedStatus[user.id] = storedFollowingStatus === 'true';
+      }
+    });
+    setFollowingStatus(storedStatus);
+  }, [users]);
+
+  const handleClick = useCallback(
+    async (event, userId, following) => {
+      const updatedUsers = users.map(user => {
+        if (user.id === userId) {
+          const updatedFollowers = following
+            ? user.followers - 1
+            : user.followers + 1;
+          updateUsers(user.id, updatedFollowers)
+            .then(response => {
+              setUsers(prevUsers => {
+                return prevUsers.map(prevUser => {
+                  if (prevUser.id === userId) {
+                    return {
+                      ...prevUser,
+                      following: !prevUser.following,
+                      followers: updatedFollowers,
+                    };
+                  }
+                  return prevUser;
                 });
-                setFollowingStatus(prevStatus => ({
-                  ...prevStatus,
-                  [userId]: !prevStatus[userId],
-                }));
-                localStorage.setItem(
-                  `followingStatus_${userId}`,
-                  (!following).toString()
-                );
-              })
-              .catch(error => {
-                console.error('Error updating user:', error);
               });
-          }
-          return user;
-        });
-        setUsers(updatedUsers);
-      },
-      [users]
-    );
-
-
+              setFollowingStatus(prevStatus => ({
+                ...prevStatus,
+                [userId]: !prevStatus[userId],
+              }));
+              localStorage.setItem(
+                `followingStatus_${userId}`,
+                (!following).toString()
+              );
+            })
+            .catch(error => {
+              console.error('Error updating user:', error);
+            });
+        }
+        return user;
+      });
+      setUsers(updatedUsers);
+    },
+    [users]
+  );
 
   return (
     <>
