@@ -1,45 +1,170 @@
-import React, { useState, useEffect } from 'react';
-import './UserCard.css';
+import React, { useState, useEffect, useCallback } from 'react';
+import { useDispatch } from 'react-redux';
+
+import {
+  AvatarBox,
+  ButtonBack,
+  ButtonContainer,
+  ButtonFollow,
+  ButtonLoadMore,
+  Container,
+  Followers,
+  Header,
+  Img,
+  Line,
+  Logo,
+  Picture,
+  StyledLink,
+  TextButton,
+  Tweets,
+  UserBox,
+  UserCardContainer,
+} from './UserCard.styled';
+import { fetchgetUsers } from 'components/Redux/option';
+import { updateUsers } from 'components/Fetch/updateUsers';
+
 
 const UserCard = () => {
-  const initialFollowers = 100500;
-  const [followers, setFollowers] = useState(initialFollowers);
-  const [following, setFollowing] = useState(false);
+  const logo = '../../images/Logo.png';
+  const pic = '../../images/picture.png';
+  const dispatch = useDispatch();
+  const [users, setUsers] = useState([]);
+  const [displayedUsers, setDisplayedUsers] = useState([]);
+  const [currentIndex, setCurrentIndex] = useState(0);
+    const [hasMore, setHasMore] = useState(true);
+    const [followingStatus, setFollowingStatus] = useState({});
 
-  const handleFollowClick = () => {
-    if (following) {
-      setFollowers(followers - 1);
-    } else {
-      setFollowers(followers + 1);
-    }
-    setFollowing(!following);
+
+  const loadMoreCards = () => {
+    setCurrentIndex(prevIndex => prevIndex + 3);
+  };
+
+  const goBack = () => {
+    setCurrentIndex(prevIndex => prevIndex - 3);
   };
 
   useEffect(() => {
-    const isFollowing = localStorage.getItem('isFollowing') === 'true';
-    const savedFollowers = localStorage.getItem('followers');
-    if (isFollowing !== null && savedFollowers !== null) {
-      setFollowing(isFollowing);
-      setFollowers(parseInt(savedFollowers));
-    }
-  }, []);
+    dispatch(fetchgetUsers()).then(response => {
+      const fetchedUsers = response.payload;
+      setUsers(fetchedUsers);
+    });
+  }, [dispatch]);
 
   useEffect(() => {
-    localStorage.setItem('isFollowing', following.toString());
-    localStorage.setItem('followers', followers.toString());
-  }, [following, followers]);
+    const endIndex = currentIndex + 3;
+    setDisplayedUsers(users.slice(currentIndex, endIndex));
+    setHasMore(endIndex < users.length);
+  }, [currentIndex, users]);
+    
+    useEffect(() => {
+      const storedStatus = {};
+      users.forEach(user => {
+        const storedFollowingStatus = localStorage.getItem(
+          `followingStatus_${user.id}`
+        );
+        if (storedFollowingStatus !== null) {
+          storedStatus[user.id] = storedFollowingStatus === 'true';
+        }
+      });
+      setFollowingStatus(storedStatus);
+    }, [users]);
+
+    const handleClick = useCallback(
+      async (event, userId, following) => {
+        const updatedUsers = users.map(user => {
+          if (user.id === userId) {
+            const updatedFollowers = following
+              ? user.followers - 1
+              : user.followers + 1;
+            updateUsers(user.id, updatedFollowers)
+              .then(response => {
+                setUsers(prevUsers => {
+                  return prevUsers.map(prevUser => {
+                    if (prevUser.id === userId) {
+                      return {
+                        ...prevUser,
+                        following: !prevUser.following,
+                        followers: updatedFollowers,
+                      };
+                    }
+                    return prevUser;
+                  });
+                });
+                setFollowingStatus(prevStatus => ({
+                  ...prevStatus,
+                  [userId]: !prevStatus[userId],
+                }));
+                localStorage.setItem(
+                  `followingStatus_${userId}`,
+                  (!following).toString()
+                );
+              })
+              .catch(error => {
+                console.error('Error updating user:', error);
+              });
+          }
+          return user;
+        });
+        setUsers(updatedUsers);
+      },
+      [users]
+    );
+
+
 
   return (
-    <div className="user-card">
-      <h2>User Card</h2>
-      <p>Followers: {followers.toLocaleString()}</p>
-      <button
-        onClick={handleFollowClick}
-        className={following ? 'following' : ''}
-      >
-        {following ? 'Following' : 'Follow'}
-      </button>
-    </div>
+    <>
+      <Container>
+        <Header>
+          <StyledLink to="/">Go Home</StyledLink>
+        </Header>
+        <UserCardContainer>
+          {displayedUsers.map(user => (
+            <UserBox key={user.id}>
+              <Logo>
+                <Img src={`${logo}`} alt="logo" />
+              </Logo>
+              <Picture>
+                <Img src={`${pic}`} alt="card_picture" />
+              </Picture>
+              <Line></Line>
+              <AvatarBox>
+                <img
+                  src={user.avatar}
+                  alt="user_photo"
+                  style={{
+                    width: '62px',
+                    height: '62px',
+                    borderRadius: '50%',
+                  }}
+                />
+              </AvatarBox>
+              <Tweets>{user.tweets} tweets</Tweets>
+              <Followers>
+                {user.followers.toLocaleString('en-US')} followers
+              </Followers>
+              <ButtonFollow
+                following={followingStatus[user.id]}
+                onClick={event =>
+                  handleClick(event, user.id, followingStatus[user.id])
+                }
+              >
+                <TextButton>
+                  {followingStatus[user.id] ? 'Following' : 'Follow'}
+                </TextButton>
+              </ButtonFollow>
+              <img src="../../images/picture.png" alt="" />
+            </UserBox>
+          ))}
+        </UserCardContainer>
+        <ButtonContainer>
+          {currentIndex > 0 && <ButtonBack onClick={goBack}>Back</ButtonBack>}
+          {hasMore && (
+            <ButtonLoadMore onClick={loadMoreCards}>Load More</ButtonLoadMore>
+          )}
+        </ButtonContainer>
+      </Container>
+    </>
   );
 };
 
