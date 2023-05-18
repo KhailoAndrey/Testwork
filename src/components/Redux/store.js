@@ -4,7 +4,7 @@ import { usersReducer } from './userSlice';
 import { followerReducer } from './followerSlice';
 import {
   persistStore,
-  // persistReducer,
+  persistReducer,
   FLUSH,
   REHYDRATE,
   PAUSE,
@@ -12,22 +12,39 @@ import {
   PURGE,
   REGISTER,
 } from 'redux-persist';
-// import storage from 'redux-persist/lib/storage';
+import storage from 'redux-persist/lib/storage';
 
+const persistConfig = {
+  key: 'root',
+  storage,
+  whitelist: ['users', 'followers'], 
+};
 
 const rootReducer = combineReducers({
   users: usersReducer,
   followers: followerReducer,
 });
 
+const persistedReducer = persistReducer(persistConfig, rootReducer);
+
 export const store = configureStore({
-  reducer: rootReducer, 
+  reducer: persistedReducer, 
   middleware: getDefaultMiddleware =>
-  getDefaultMiddleware({
-    serializableCheck: {
-      ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
-    },
-  }),
+    getDefaultMiddleware({
+      serializableCheck: {
+        ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
+      },
+    }),
 });
+
+// export const store = configureStore({
+//   reducer: rootReducer, 
+//   middleware: getDefaultMiddleware =>
+//   getDefaultMiddleware({
+//     serializableCheck: {
+//       ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
+//     },
+//   }),
+// });
 
 export const persistor = persistStore(store);
