@@ -5,18 +5,38 @@ import styled from 'styled-components'
     display: flex;
     flex-direction: column;
     align-items: center;
+    position: relative;
+      max-width: calc(380px * 3 + 30px * 2); 
+padding-bottom: 20px;
+  margin-top: 170px;
   `;
 
 export const Header = styled.div`
-height: 50px;
-text-align: left;
-  margin-bottom: 10px;
-  
+height: 80px;
+text-align: center;
+padding-top: 20px;
+  position: fixed;
+  top: 0;
+  z-index: 100;
+   background-color: cadetblue;
+   width: 100vw;
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   /* gap: 50px; */
 `
+export const TextSelect = styled.p`
+font-size: 18px;
+color: purple;
+font-weight: 500;
+margin-right: 20px;
+`
+
 export const StyledLink = styled(Link)`
   color: green;
   text-decoration: none;
   font-size: 24px;
+  margin-left: 50px;
   &:hover{
     scale: 1.3;
     color: blue;
@@ -25,8 +45,15 @@ export const StyledLink = styled(Link)`
 
 export const UserCardContainer = styled.div`
   display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
   gap: 20px;
-  margin-top: 20px;
+  width: 100%;
+  max-width: calc(380px * 3 + 20px * 2); 
+  margin-left: auto;
+  margin-right: auto;
+padding-bottom: 20px;
+margin-top: 80px;
 `;
 
 export const UserBox = styled.div`
@@ -42,7 +69,6 @@ border-radius: 20px;
 export const Logo = styled.div`
 width: 76px;
 height: 22px;
-/* background-image: url('../../images/Logo.png'); */
 opacity: 0.3;
 position: absolute;
 top: 20px;
@@ -50,7 +76,6 @@ left: 20px;
 `
 
 export const Picture = styled.div`
-/* background: url('../../images/picture.png'); */
 width: 308px;
 height: 168px;
 position: absolute;
@@ -58,7 +83,6 @@ top: 28px;
 left: 36px;
 `
 export const Img = styled.img`
-/* position: absolute; */
 `
 
 export const Line = styled.div`
@@ -143,8 +167,14 @@ flex: none;
 order: 0;
 flex-grow: 0;
 `
-export const ButtonBack = styled.button`
-width: 100px;
+export const ButtonContainer = styled.div`
+display: flex;
+justify-content: center;
+margin-top: 10px;
+gap: 20px;
+`
+
+export const ButtonScrollTop = styled.button`
 height: 30px;
 display: flex;
 align-items: center;
@@ -167,7 +197,6 @@ cursor: pointer;
 `
 
 export const ButtonLoadMore = styled.button`
-/* width: 100px; */
 height: 30px;
 display: flex;
 align-items: center;
@@ -186,11 +215,4 @@ cursor: pointer;
     background-color: aquamarine;
     scale: 1.1;
 }
-`
-export const ButtonContainer = styled.div`
-display: flex;
-justify-content: center;
-margin-top: 10px;
-gap: 20px;
-
 `
