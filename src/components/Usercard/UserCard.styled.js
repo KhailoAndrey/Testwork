@@ -5,16 +5,16 @@ import styled from 'styled-components'
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: center;
     position: relative;
       max-width: calc(380px * 3 + 30px * 2); 
 padding-bottom: 20px;
-  margin-top: 170px;
+  margin-top: 80px;
   `;
 
 export const Header = styled.div`
 height: 80px;
 text-align: center;
-padding-top: 20px;
   position: fixed;
   top: 0;
   z-index: 100;
@@ -23,7 +23,7 @@ padding-top: 20px;
    display: flex;
    align-items: center;
    justify-content: center;
-   /* gap: 50px; */
+   border-bottom: 1px dashed #6216A0;
 `
 export const TextSelect = styled.p`
 font-size: 18px;
@@ -53,7 +53,7 @@ export const UserCardContainer = styled.div`
   margin-left: auto;
   margin-right: auto;
 padding-bottom: 20px;
-margin-top: 80px;
+margin-top: 20px;
 `;
 
 export const UserBox = styled.div`
@@ -153,6 +153,11 @@ top: 374px;
 background: ${props => props.following  ? '#5CD3A8' : '#EBD8FF'};
 box-shadow: 0px 3.43693px 3.43693px rgba(0, 0, 0, 0.25);
 border-radius: 10px;
+cursor: pointer;
+&:hover {
+  scale: 1.1;
+  opacity: 0.8;
+}
 `
 export const TextButton = styled.p`
 height: 22px;
