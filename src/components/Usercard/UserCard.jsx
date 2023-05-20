@@ -157,8 +157,9 @@ const UserCard = () => {
 
   return (
     <>
+      <Container>
       <Header>
-        <TextSelect>Selected</TextSelect>
+        <TextSelect>Select an option</TextSelect>
           <div>
             <select value={selectedOption} onChange={handleOptionChange}>
               <option value="all">Show All</option>
@@ -168,7 +169,6 @@ const UserCard = () => {
           </div>
           <StyledLink to="/">Go Home</StyledLink>
         </Header>
-      <Container>
         <UserCardContainer>
           {displayedUsers.map(user => (
             <UserBox key={user.id}>
