@@ -10,4 +10,6 @@ background-image: linear-gradient(
   #00b9ff 0%,
   #ffb800
 );
+background-size: cover;
+
 `;
