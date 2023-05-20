@@ -41,7 +41,7 @@ _Загальний вигляд картки у двох станах - Follow 
    виведено через кому (100,500).
 
 Створи свій персональний бекенд для розробки за допомогою UI-сервісу
-[mockapi.io](https://mockapi.io/projects). Створи ресурс users з наступними
+[mockapi.io](https://mockapi.io/projects). Створи ресурс `users` з наступними
 полями: _id, user, tweets, followers, avatar_.
 
 # Додаткове завдання
