@@ -24,6 +24,8 @@ import {
 } from './UserCard.styled';
 import { fetchgetUsers } from 'components/Redux/option';
 import { updateUsers } from 'components/Fetch/updateUsers';
+import { Notify } from 'notiflix';
+
 
 const UserCard = () => {
   const dispatch = useDispatch();
@@ -113,6 +115,15 @@ const UserCard = () => {
                 `followingStatus_${userId}`,
                 (!following).toString()
               );
+              Notify.info(
+                'The user card has been moved to the respective category.',
+                {
+                  position: 'center-top',
+                  distance: '80px',
+                  timeout: 1500,
+                }
+              );
+
             })
             .catch(error => {
               console.error('Error updating user:', error);
@@ -121,6 +132,7 @@ const UserCard = () => {
         return user;
       });
       setUsers(updatedUsers);
+      
     },
     [users]
   );
