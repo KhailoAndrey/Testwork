@@ -11,15 +11,3 @@ background-image: linear-gradient(
   #ffb800
 );
 `;
-
-// export const WrapperHeader = styled.header`
-//   height: 50px;
-//   background: linear-gradient(to bottom, #E8A95E, #D37E19);
-//   display: flex;
-//   justify-content: space-evenly;
-//   align-items: center;
-//   gap: 70px;
-//   padding: 10px;
-//   box-shadow: rgb(33 33 33) 0px 2px 10px 1px;
-//   border-radius: 20px;
-// `;

@@ -3,30 +3,20 @@ import styled from 'styled-components';
 
 
 export const WrapperHomePage = styled.div`
-  /* position: absolute; */
-  /* top: 25vh;
-  right: 20vw;
-  width: 400px; */
-  
   display: flex;
 flex-direction: column;
 justify-content: center;
 align-items: center;
-/* background-color: beige; */
 height: 100vh;
 width: 50vw; 
 margin-left: auto;
 margin-right: auto;
-/* background-color: grey; */
 `;
 
 export const HomeTitle = styled.p`
   max-width: 600px;
-  /* padding-left: 15px; */
   font-size: 32px;
   font-weight: 700;
-  /* margin-top: auto;
-  margin-bottom: auto; */
   text-align: center;
   justify-content: center;
   align-items: center;
