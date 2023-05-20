@@ -2,69 +2,42 @@
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-## Available Scripts
+#Тестове завдання
 
-In the project directory, you can run:
+![picture](public/task_image.png)
 
-### `npm start`
+*Загальний вигляд картки у двох станах - Follow та Following*
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+<b>Мета:</b> створити картки твітів та додати інтерактивності при клікові на кнопку.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+# Критерії виконання
 
-### `npm test`
+<ul>
+<li>Верстка фіксована в рх, семантична та валідна.</li>
+<li>Немає помилок в консолі браузера.</li>
+<li>Робота виконана на нативному JS з використанням зборщиків або на React.</li>
+<li>Інтерактивність працює відповідно до технічного завдання.</li>
+<li>Код відформатований та без коментарів.</li>
+<li>В репозиторії має бути описаний README.md.</li>
+</ul>
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+# Технічне завдання
 
-### `npm run build`
+1. Відповідно до [макету](https://www.figma.com/file/zun1oP6NmS2Lmgbcj6e1IG/Test?node-id=0-1&t=fKfPK1hQF3isHhAC-0) потрібно реалізувати картки юзера.
+2. При клікові на кнопку Follow - текст змінюється на Following. Також змінюється колір кнопки. А до кількості фоловерів додається і ваш. Тобто, початкова кількість складає 100,500 фоловерів. При клікові на кнопку буде 100,501.
+3. При оновлені сторінки має фіксуватись кінцевий результат дій юзера. Тобто, якщо клікнути по кнопці і оновити сторінку - то кнопка все рівно залишається в стані Following із відповідним кольором, а кількість фоловерів НЕ зменшується до початкового значення.
+4. При повторному клікові на кнопку її текст та колір змінюються до початкового стану. Також змінюється і кількість фоловерів. Вона зменшується на 1 (100,500).
+5. В коді цифра 100,500 має бути прописана одним значенням (100500). В UI - виведено через кому (100,500).
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+Створи свій персональний бекенд для розробки за допомогою UI-сервісу [mockapi.io](https://mockapi.io/projects). Створи ресурс users. 
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+# Додаткове завдання
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+Створи маршрутизацію, використовуючи React Router.
 
-### `npm run eject`
+У застосунку повинні бути такі маршрути. Якщо користувач зайшов за неіснуючим маршрутом, його необхідно перенаправляти на домашню сторінку. **'/'** – компонент **Home**, домашня сторінка. Стилізація та оформлення на ваш розсуд **'/tweets'** - компонент **tweets**, сторінка із відображенням твітів На сторінці **tweets** має бути кнопка Back, яка веде на головну сторінку.
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+ <b>*Завдання із зірочкою*</b>
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+Додай фільтрацію. Це має бути Dropdown із 3 опціями(оформлення на ваш розсуд): <b>show all, follow, followings</b>. **Show all** - показати всі твіти. **Follow** - показати твіти, у яких стан *follow*. **Followings** - показати твіти, у яких стан *following*.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)

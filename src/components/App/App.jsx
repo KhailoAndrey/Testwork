@@ -3,7 +3,7 @@ import UserCard from '../Usercard/UserCard';
 import { Route, Routes } from 'react-router-dom';
 import { Layout } from '../Layout/Layout';
 import Home from '../Pages/Home';
-import { NotFoundPage } from 'components/Pages/NotFoundPage';
+// import { NotFoundPage } from 'components/Pages/NotFoundPage';
 
 function App() {
   return (
@@ -11,7 +11,7 @@ function App() {
       <Route path="/" element={<Layout />}>
         <Route index element={<Home />} />
         <Route path="/tweets" element={<UserCard />} />
-        <Route path="*" element={<NotFoundPage />} />
+        <Route path="*" element={<Home />} />
       </Route>
     </Routes>
   );
