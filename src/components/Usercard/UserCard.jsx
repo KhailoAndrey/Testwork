@@ -126,6 +126,11 @@ const UserCard = () => {
 
             })
             .catch(error => {
+              Notify.failure('Oops... Something went wrong.', {
+                position: 'center-top',
+                distance: '80px',
+                timeout: 2000,
+              });
               console.error('Error updating user:', error);
             });
         }
