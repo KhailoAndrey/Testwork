@@ -4,7 +4,6 @@ import logo from '../../images/Logo.png';
 import pic from '../../images/picture.png';
 import {
   AvatarBox,
-  // ButtonBack,
   ButtonContainer,
   ButtonFollow,
   ButtonLoadMore,
@@ -35,8 +34,7 @@ const UserCard = () => {
   const [followingStatus, setFollowingStatus] = useState({});
   const [selectedOption, setSelectedOption] = useState('all');
   const [filteredUsers, setFilteredUsers] = useState([]);
-    const [showButton, setShowButton] = useState(false);
-
+  const [showButton, setShowButton] = useState(false);
 
   const handleOptionChange = event => {
     setSelectedOption(event.target.value);
@@ -46,10 +44,6 @@ const UserCard = () => {
   const loadMoreCards = () => {
     setCurrentIndex(prevIndex => prevIndex + 3);
   };
-
-  // const goBack = () => {
-  //   setCurrentIndex(prevIndex => Math.max(prevIndex - 3, 0));
-  // };
 
   useEffect(() => {
     const handleScroll = () => {
@@ -133,42 +127,33 @@ const UserCard = () => {
 
   useEffect(() => {
     let filteredUsers = users;
+    const endIndex = currentIndex + 3;
     if (selectedOption === 'follow') {
       filteredUsers = users.filter(user => !followingStatus[user.id]);
     } else if (selectedOption === 'followings') {
       filteredUsers = users.filter(user => followingStatus[user.id]);
     }
     setFilteredUsers(filteredUsers);
-    setDisplayedUsers(filteredUsers.slice(0, 3));
-    setCurrentIndex(0);
-  }, [selectedOption, users, followingStatus]);
-
-  useEffect(() => {
-    const endIndex = currentIndex + 3;
     setDisplayedUsers(filteredUsers.slice(0, endIndex));
     setHasMore(endIndex < filteredUsers.length);
-  }, [currentIndex, filteredUsers]);
+  }, [selectedOption, users, followingStatus, currentIndex]);
 
-  useEffect(() => {
-    const endIndex = currentIndex + 3;
-    setDisplayedUsers(filteredUsers.slice(0, endIndex));
-    setHasMore(endIndex < filteredUsers.length);
-  }, [currentIndex, filteredUsers]);
+  useEffect(() => {}, [currentIndex, filteredUsers]);
 
   return (
     <>
-      <Container>
       <Header>
         <TextSelect>Select an option</TextSelect>
-          <div>
-            <select value={selectedOption} onChange={handleOptionChange}>
-              <option value="all">Show All</option>
-              <option value="follow">Follow</option>
-              <option value="followings">Followings</option>
-            </select>
-          </div>
-          <StyledLink to="/">Go Home</StyledLink>
-        </Header>
+        <div>
+          <select value={selectedOption} onChange={handleOptionChange}>
+            <option value="all">Show All</option>
+            <option value="follow">Follow</option>
+            <option value="followings">Followings</option>
+          </select>
+        </div>
+        <StyledLink to="/">Go Home</StyledLink>
+      </Header>
+      <Container>
         <UserCardContainer>
           {displayedUsers.map(user => (
             <UserBox key={user.id}>
@@ -209,7 +194,9 @@ const UserCard = () => {
           ))}
         </UserCardContainer>
         <ButtonContainer>
-          {showButton && <ButtonScrollTop onClick={scrollToTop}>Back to Top</ButtonScrollTop>}
+          {showButton && (
+            <ButtonScrollTop onClick={scrollToTop}>Back to Top</ButtonScrollTop>
+          )}
           {hasMore && (
             <ButtonLoadMore onClick={loadMoreCards}>Load More</ButtonLoadMore>
           )}
