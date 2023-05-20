@@ -1,9 +1,10 @@
-import './App.css';
-import UserCard from '../Usercard/UserCard';
+
 import { Route, Routes } from 'react-router-dom';
 import { Layout } from '../Layout/Layout';
-import Home from '../Pages/Home';
-// import { NotFoundPage } from 'components/Pages/NotFoundPage';
+import { lazy } from 'react';
+
+const Home = lazy(() => import('../Pages/Home'));
+const UserCard = lazy(() => import('../Usercard/UserCard'));
 
 function App() {
   return (

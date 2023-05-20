@@ -10,6 +10,7 @@ import styled from 'styled-components'
       max-width: calc(380px * 3 + 30px * 2); 
 padding-bottom: 20px;
   margin-top: 80px;
+  min-height: calc(100vh - 100px);
   `;
 
 export const Header = styled.div`
@@ -18,7 +19,7 @@ text-align: center;
   position: fixed;
   top: 0;
   z-index: 100;
-   background-color: cadetblue;
+   background-color: #46ABD9;
    width: 100vw;
    display: flex;
    align-items: center;
@@ -26,8 +27,8 @@ text-align: center;
    border-bottom: 1px dashed #6216A0;
 `
 export const TextSelect = styled.p`
-font-size: 18px;
-color: purple;
+font-size: 22px;
+color: #3D890D;
 font-weight: 500;
 margin-right: 20px;
 `

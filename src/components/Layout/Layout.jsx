@@ -5,13 +5,11 @@ import { WrapperMain } from "./Layout.styled";
 
 
 export const Layout = () => {
-  return (
-    <div>
+  return (    
       <WrapperMain>
         <Suspense fallback={<Loader />}>
           <Outlet />
         </Suspense>
       </WrapperMain>
-    </div>
   );
 };
